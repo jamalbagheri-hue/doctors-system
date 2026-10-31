@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه پزشکان تمام وقت دانشگاه علوم پزشکی کردستان</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'Tahoma', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Vazirmatn Persian Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/Vazirmatn-FD-font-face.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS for Excel generation -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SweetAlert2 for modern alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            font-family: 'Vazirmatn FD', 'Vazirmatn', Tahoma, sans-serif;
+            background-color: #f8fafc;
+        }
+        .table-sticky-header th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .print-container {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                font-size: 10pt !important;
+            }
+            th, td {
+                border: 1px solid #333 !important;
+                padding: 4px 6px !important;
+            }
+            th {
+                background-color: #e2e8f0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+        .print-only {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- ================= LOGIN OVERLAY (AUTH MODAL) ================= -->
+    <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 border border-slate-100 text-center relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-teal-500/10 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-blue-500/10 rounded-full blur-2xl"></div>
+            
+            <!-- Logo & Title -->
+            <div class="w-20 h-20 bg-gradient-to-tr from-teal-600 to-emerald-500 text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-teal-500/30 mb-5">
+                <i class="fa-solid fa-user-doctor text-4xl"></i>
+            </div>
+            
+            <h2 class="text-2xl font-black text-slate-800 tracking-tight">سامانه پزشکان تمام وقت دانشگاه علوم پزشکی کردستان</h2>
+            <p class="text-xs text-slate-500 mt-1 mb-6 font-medium">معاونت درمان دانشگاه علوم پزشکی کردستان</p>
+            
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-right mb-6 text-xs text-slate-600 leading-relaxed flex items-center gap-2.5">
+                <i class="fa-solid fa-shield-halved text-teal-600 text-base flex-shrink-0"></i>
+                <div class="text-xs font-medium">
+                    ورود به سامانه با رمز عبور مجاز (مدیریت / کاربر مشاهده‌کننده)
+                </div>
+            </div>
+
+            <form id="loginForm" class="space-y-4" onsubmit="handleLogin(event)">
+                <div class="text-right">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">رمز عبور ورود به سامانه</label>
+                    <div class="relative">
+                        <input type="password" id="loginPassword" required autofocus
+                            class="w-full text-center tracking-widest text-lg font-bold py-3 px-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                            placeholder="••••••••">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute left-3 top-3.5 text-slate-400 hover:text-slate-600">
+                            <i id="eyeIcon" class="fa-solid fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="loginError" class="hidden text-xs text-rose-600 font-bold bg-rose-50 border border-rose-200 rounded-lg p-2.5"></div>
+
+                <button type="submit" id="loginSubmitBtn"
+                    class="w-full py-3.5 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg shadow-teal-600/30 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>ورود به سامانه</span>
+                </button>
+            </form>
+
+            <div class="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-400">
+                معاونت درمان دانشگاه علوم پزشکی کردستان
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN APP NAVBAR ================= -->
+    <header class="bg-white border-b border-slate-200/80 sticky top-0 z-30 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Brand & Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center shadow-md shadow-teal-500/20">
+                        <i class="fa-solid fa-hospital-user text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-sm sm:text-base font-extrabold text-slate-800">سامانه پزشکان تمام وقت دانشگاه علوم پزشکی کردستان</h1>
+                        <p class="text-[11px] text-slate-500">معاونت درمان دانشگاه علوم پزشکی کردستان</p>
+                    </div>
+                </div>
+
+                <!-- Mode Switcher Tabs -->
+                <div class="hidden md:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold gap-1 border border-slate-200/60">
+                    <button onclick="switchTab('geographic')" id="tabBtnGeo"
+                        class="tab-btn px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-graduation-cap text-teal-600"></i>
+                        <span>هیأت علمی جغرافیایی</span>
+                        <span id="badgeGeoCount" class="bg-teal-100 text-teal-800 text-[10px] px-1.5 py-0.5 rounded-full font-bold">۰</span>
+                    </button>
+                    <button onclick="switchTab('treatment')" id="tabBtnTreat"
+                        class="tab-btn px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-stethoscope text-blue-600"></i>
+                        <span>تمام وقت درمانی</span>
+                        <span id="badgeTreatCount" class="bg-blue-100 text-blue-800 text-[10px] px-1.5 py-0.5 rounded-full font-bold">۰</span>
+                    </button>
+                    <button onclick="switchTab('analytics')" id="tabBtnAnalytics"
+                        class="tab-btn px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-chart-pie text-indigo-600"></i>
+                        <span>داشبورد تحلیلی</span>
+                    </button>
+                    <button onclick="switchTab('audit')" id="tabBtnAudit"
+                        class="tab-btn px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-clock-rotate-left text-amber-600"></i>
+                        <span>لاگ امنیتی</span>
+                    </button>
+                </div>
+
+                <!-- User Profile & Action Tools -->
+                <div class="flex items-center gap-3">
+                    <div id="userRoleBadge" class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-xl text-xs font-bold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="userRoleLabel">مدیر ارشد</span>
+                    </div>
+
+                    <button onclick="handleLogout()" title="خروج از سامانه"
+                        class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all border border-slate-200">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Mobile Sub-Nav -->
+            <div class="flex md:hidden overflow-x-auto py-2 gap-2 border-t border-slate-100 text-xs">
+                <button onclick="switchTab('geographic')" id="mobTabGeo" class="px-3 py-1.5 rounded-lg bg-teal-50 text-teal-800 font-bold whitespace-nowrap">هیأت علمی</button>
+                <button onclick="switchTab('treatment')" id="mobTabTreat" class="px-3 py-1.5 rounded-lg text-slate-600 font-bold whitespace-nowrap">درمانی</button>
+                <button onclick="switchTab('analytics')" id="mobTabAnalytics" class="px-3 py-1.5 rounded-lg text-slate-600 font-bold whitespace-nowrap">آمار و نمودار</button>
+                <button onclick="switchTab('audit')" id="mobTabAudit" class="px-3 py-1.5 rounded-lg text-slate-600 font-bold whitespace-nowrap">لاگ امنیت</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTAINER ================= -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ================= TOP SUMMARY STATS CARDS ================= -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 no-print">
+            
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">کل پزشکان ثبت شده</p>
+                    <h3 id="statTotalAll" class="text-2xl font-black text-slate-800 mt-1">۲۷۹</h3>
+                    <p class="text-[11px] text-teal-600 font-bold mt-1">درمانی + هیأت علمی</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">هیأت علمی تمام وقت</p>
+                    <h3 id="statGeoTotal" class="text-2xl font-black text-teal-700 mt-1">۶۲</h3>
+                    <p id="statGeoActive" class="text-[11px] text-emerald-600 font-bold mt-1">۵۸ پزشک شاغل فعال</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">پزشکان تمام وقت درمانی</p>
+                    <h3 id="statTreatTotal" class="text-2xl font-black text-blue-700 mt-1">۲۱۷</h3>
+                    <p id="statTreatActive" class="text-[11px] text-emerald-600 font-bold mt-1">۱۶۴ پزشک شاغل فعال</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-stethoscope"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">پزشکان خارج شده / انتقالی</p>
+                    <h3 id="statTotalExited" class="text-2xl font-black text-rose-600 mt-1">۶۰</h3>
+                    <p class="text-[11px] text-slate-400 font-bold mt-1">دارای تاریخ خاتمه یا انتقال</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-user-xmark"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= TAB CONTENT 1 & 2: DOCTORS TABLE (Geographic & Treatment) ================= -->
+        <div id="tableSection" class="space-y-4">
+            
+            <!-- Controls, Search, Filter & Action Toolbar -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-sm no-print">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    
+                    <!-- Search Input -->
+                    <div class="flex-1 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="searchInput" oninput="debounceSearch()"
+                            class="w-full pr-10 pl-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
+                            placeholder="جستجوی سریع (نام، نام خانوادگی، تخصص، کد ملی، نظام پزشکی، شهرستان، ملاحظات...)">
+                    </div>
+
+                    <!-- Dropdown Filters -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <!-- Specialty Filter -->
+                        <select id="filterSpecialty" onchange="applyFilters()"
+                            class="px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <option value="">همه رشته‌های تخصصی</option>
+                        </select>
+
+                        <!-- Secondary Filter: City for Treatment / Rank for Geographic -->
+                        <select id="filterSecondary" onchange="applyFilters()"
+                            class="px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <option value="">همه موارد</option>
+                        </select>
+
+                        <!-- Status Filter -->
+                        <select id="filterStatus" onchange="applyFilters()"
+                            class="px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <option value="">همه وضعیت‌ها</option>
+                            <option value="active">شاغلین فعال</option>
+                            <option value="exited">خارج شده / انتقالی</option>
+                        </select>
+
+                        <!-- Clear Filters Button -->
+                        <button onclick="resetFilters()" title="پاکسازی فیلترها"
+                            class="p-2.5 text-slate-500 hover:text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl transition-all">
+                            <i class="fa-solid fa-filter-circle-xmark"></i>
+                        </button>
+                    </div>
+
+                    <!-- Action Buttons: Add Doctor (Admin only), Export Excel, Export PDF -->
+                    <div class="flex items-center gap-2 border-t lg:border-t-0 pt-3 lg:pt-0">
+                        <button id="addDoctorBtn" onclick="openAddDoctorModal()"
+                            class="admin-only px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-md shadow-teal-600/20 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>ثبت پزشک جدید</span>
+                        </button>
+
+                        <button onclick="exportToExcel()"
+                            class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+                            title="خروجی فایل اکسل (.xlsx)">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span class="hidden sm:inline">اکسل</span>
+                        </button>
+
+                        <button onclick="exportToPDF()"
+                            class="px-3.5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+                            title="چاپ و خروجی PDF">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span class="hidden sm:inline">PDF</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden print-container">
+                
+                <!-- Table Header Banner (Official Layout Header) -->
+                <div class="p-5 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-teal-50/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span id="tableIcon" class="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center text-sm shadow-sm">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </span>
+                            <h2 id="tableTitle" class="text-base sm:text-lg font-black text-slate-800">
+                                لیست مشخصات پزشکان عضو هیأت علمی تمام وقت جغرافیایی شاغل در مراکز درمانی دانشگاه (شماره ۲)
+                            </h2>
+                        </div>
+                        <p id="tableSubtitle" class="text-xs text-slate-500 mt-1 font-medium">
+                            تدوین و ویرایش در معاونت درمان دانشگاه علوم پزشکی کردستان (تاریخ نسخه: ۱۴۰۵/۰۸/۰۷)
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-xs font-bold text-slate-500 no-print">
+                        <span>نمایش</span>
+                        <select id="recordsPerPage" onchange="changePageSize()" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs">
+                            <option value="15">۱۵</option>
+                            <option value="25" selected>۲۵</option>
+                            <option value="50">۵۰</option>
+                            <option value="100">۱۰۰</option>
+                            <option value="-1">همه</option>
+                        </select>
+                        <span>رکورد در صفحه</span>
+                    </div>
+                </div>
+
+                <!-- Doctors Data Table -->
+                <div class="overflow-x-auto min-h-[300px]">
+                    <table class="w-full text-right text-xs">
+                        <thead id="tableHead" class="bg-slate-100/90 text-slate-700 font-extrabold border-b border-slate-200 table-sticky-header">
+                            <!-- Populated dynamically based on Mode -->
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden py-16 text-center">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 mx-auto mb-3">
+                        <i class="fa-solid fa-folder-open text-2xl"></i>
+                    </div>
+                    <p class="text-slate-600 font-bold text-sm">هیچ رکوردی منطبق با جستجو یا فیلترهای انتخابی یافت نشد</p>
+                    <button onclick="resetFilters()" class="mt-3 px-4 py-1.5 bg-teal-50 text-teal-700 hover:bg-teal-100 rounded-lg text-xs font-bold">
+                        پاکسازی فیلترها
+                    </button>
+                </div>
+
+                <!-- Pagination Footer -->
+                <div id="paginationBar" class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 no-print">
+                    <div>
+                        نمایش <span id="pageRangeStart" class="font-bold text-slate-800">۱</span> تا <span id="pageRangeEnd" class="font-bold text-slate-800">۲۵</span> از مجموع <span id="totalRecordsCount" class="font-bold text-teal-700">۶۲</span> پزشک
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button onclick="prevPage()" id="prevPageBtn" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 disabled:opacity-40 font-bold">
+                            <i class="fa-solid fa-chevron-right ml-1"></i> قبلی
+                        </button>
+                        <div id="pageNumbers" class="flex items-center gap-1">
+                            <!-- Page badges -->
+                        </div>
+                        <button onclick="nextPage()" id="nextPageBtn" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 disabled:opacity-40 font-bold">
+                            بعدی <i class="fa-solid fa-chevron-left mr-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= TAB CONTENT 3: ANALYTICS DASHBOARD ================= -->
+        <div id="analyticsSection" class="hidden space-y-6 no-print">
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+                <h3 class="text-base font-extrabold text-slate-800 mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-column text-teal-600"></i>
+                    تحلیل آماری و توزیع پزشکان تمام وقت
+                </h3>
+                <p class="text-xs text-slate-500 mb-6">نمودارهای تفکیک مرتبه علمی، تخصص‌ها، شهرستان‌ها و وضعیت اشتغال</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Chart 1: Academic Ranks (Geographic) -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/70">
+                        <h4 class="text-xs font-bold text-slate-700 mb-4 flex items-center justify-between">
+                            <span>توزیع مرتبه علمی پزشکان هیأت علمی جغرافیایی</span>
+                            <span class="text-teal-600 font-extrabold">۶۲ نفر</span>
+                        </h4>
+                        <div class="h-64 relative">
+                            <canvas id="chartRanks"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Status Breakdown -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/70">
+                        <h4 class="text-xs font-bold text-slate-700 mb-4 flex items-center justify-between">
+                            <span>وضعیت اشتغال (فعال / خارج شده / انتقالی)</span>
+                            <span class="text-blue-600 font-extrabold">کل ۲۸۲ نفر</span>
+                        </h4>
+                        <div class="h-64 relative">
+                            <canvas id="chartStatus"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3: Treatment Doctors by City -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/70 lg:col-span-2">
+                        <h4 class="text-xs font-bold text-slate-700 mb-4 flex items-center justify-between">
+                            <span>توزیع پزشکان تمام وقت درمانی بر حسب شهرستان و مرکز خدمت</span>
+                            <span class="text-emerald-600 font-extrabold">۲۲۰ پزشک درمانی</span>
+                        </h4>
+                        <div class="h-72 relative">
+                            <canvas id="chartCities"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 4: Top Specialties -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/70 lg:col-span-2">
+                        <h4 class="text-xs font-bold text-slate-700 mb-4">
+                            بیشترین تخصص‌های درمانی و هیأت علمی
+                        </h4>
+                        <div class="h-72 relative">
+                            <canvas id="chartSpecialties"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB CONTENT 4: AUDIT LOGS ================= -->
+        <div id="auditSection" class="hidden space-y-4 no-print">
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-virus text-amber-600"></i>
+                            لاگ رویدادها، تغییرات و امنیت وب‌سرویس
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">ثبت کلیه عملیات ورود، ثبت، ویرایش، حذف و گزارش‌گیری با ثبت تاریخ، کاربر و نقش</p>
+                    </div>
+                    <button onclick="loadAuditLogs()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold">
+                        <i class="fa-solid fa-arrows-rotate ml-1"></i> بروزرسانی
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b">
+                            <tr>
+                                <th class="p-3">شناسه</th>
+                                <th class="p-3">زمان ثبت</th>
+                                <th class="p-3">کاربر</th>
+                                <th class="p-3">نقش دسترسی</th>
+                                <th class="p-3">نوع عملیات</th>
+                                <th class="p-3">شرح جزئیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditLogsBody" class="divide-y divide-slate-100">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= ADD / EDIT DOCTOR MODAL ================= -->
+    <div id="doctorModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/70 backdrop-blur-xs p-4 overflow-y-auto no-print">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 border border-slate-100 my-8">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg">
+                        <i id="doctorModalIcon" class="fa-solid fa-user-pen"></i>
+                    </div>
+                    <div>
+                        <h3 id="doctorModalTitle" class="text-base font-extrabold text-slate-800">ویرایش اطلاعات پزشک</h3>
+                        <p id="doctorModalSubtitle" class="text-xs text-slate-500">پزشکان عضو هیأت علمی تمام وقت جغرافیایی</p>
+                    </div>
+                </div>
+                <button onclick="closeDoctorModal()" class="text-slate-400 hover:text-slate-600 p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="doctorForm" onsubmit="saveDoctorForm(event)" class="space-y-4">
+                <input type="hidden" id="docFormId">
+                <input type="hidden" id="docFormMode"> <!-- 'geographic' or 'treatment' -->
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">نام پزشک <span class="text-rose-500">*</span></label>
+                        <input type="text" id="docFormFirstName" required
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">نام خانوادگی <span class="text-rose-500">*</span></label>
+                        <input type="text" id="docFormLastName" required
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">رشته تخصص <span class="text-rose-500">*</span></label>
+                        <input type="text" id="docFormSpecialty" required
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder="مانند: بیهوشی، داخلی، کودکان...">
+                    </div>
+
+                    <div id="fieldCityContainer">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">شهرستان / مرکز خدمت</label>
+                        <input type="text" id="docFormCity"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder="سنندج، مریوان، سقز، قروه...">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">کد ملی (۱۰ رقم)</label>
+                        <input type="text" id="docFormNationalCode" maxlength="10"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder="3730219723">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">شماره نظام پزشکی</label>
+                        <input type="text" id="docFormMedicalCode"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder="59883">
+                    </div>
+
+                    <div id="fieldRankContainer">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">مرتبه علمی</label>
+                        <select id="docFormRank"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <option value="استادیار">استادیار</option>
+                            <option value="دانشیار">دانشیار</option>
+                            <option value="استاد">استاد</option>
+                            <option value="مربی">مربی</option>
+                        </select>
+                    </div>
+
+                    <div id="fieldServiceTypeContainer">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">نوع خدمت</label>
+                        <input type="text" id="docFormServiceType" value="هیأت علمي ت ج"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">تاریخ شروع تمام وقتی / بکار</label>
+                        <input type="text" id="docFormStartDate"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder="1393/07/01 یا از قبل">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">تاریخ خروج (در صورت اتمام)</label>
+                        <input type="text" id="docFormExitDate"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder="1405/07/15 (در صورت عدم خروج خالی بگذارید)">
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">توضیحات و ملاحظات</label>
+                        <textarea id="docFormRemarks" rows="2"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder="ملاحظات تکمیلی، تبدیل وضعیت، بیمارستان خدمت، انتقال..."></textarea>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="closeDoctorModal()"
+                        class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all">
+                        انصراف
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-md shadow-teal-600/30 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-check"></i>
+                        <span>ذخیره تغییرات</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= PRINT & PDF TEMPLATE (HIDDEN ON SCREEN, VISIBLE ON PRINT) ================= -->
+    <div id="printReportTemplate" class="print-only p-4">
+        <div class="text-center pb-4 mb-4 border-b-2 border-slate-800">
+            <h1 class="text-xl font-black mb-1">دانشگاه علوم پزشکی و خدمات بهداشتی درمانی</h1>
+            <h2 id="printReportTitle" class="text-base font-bold mb-1">لیست مشخصات پزشکان</h2>
+            <p id="printReportSubtitle" class="text-xs text-slate-600">معاونت درمان دانشگاه علوم پزشکی کردستان</p>
+            <div class="flex justify-between text-[10px] mt-2 text-slate-700">
+                <span id="printReportDate">تاریخ گزارش: ۱۴۰۵/۰۸/۰۷</span>
+                <span id="printReportCount">تعداد کل: ۰ نفر</span>
+            </div>
+        </div>
+
+        <table class="w-full text-right text-xs border border-collapse">
+            <thead id="printTableHead"></thead>
+            <tbody id="printTableBody"></tbody>
+        </table>
+
+        <div class="mt-8 pt-4 flex justify-between text-xs font-bold text-center">
+            <div class="w-48 border-t border-slate-800 pt-2">
+                کارشناس اقتصاد درمان
+            </div>
+            <div class="w-48 border-t border-slate-800 pt-2">
+                مدیر نظارت و اعتباربخشی
+            </div>
+            <div class="w-48 border-t border-slate-800 pt-2">
+                معاونت درمان دانشگاه
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-white border-t border-slate-200/80 py-4 mt-auto no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+            <div>
+                سامانه هوشمند پزشکان تمام وقت دانشگاه علوم پزشکی • نسخه اختصاصی ۱۴۰۵
+            </div>
+            <div class="flex items-center gap-4">
+                <span>امنیت وب فعال: <b class="text-emerald-600">CSRF / XSS / Session Guard</b></span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
