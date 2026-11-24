@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="swal2-shown swal2-height-auto"><head>
+<html lang="fa" dir="rtl" class=""><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -155,10 +155,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-teal-500 selection:text-white min-h-screen flex flex-col swal2-shown swal2-height-auto" style="padding-right: 6px;">
+<body class="text-slate-800 antialiased selection:bg-teal-500 selection:text-white min-h-screen flex flex-col" style="padding-right: 0px;">
 
     <!-- Top Navigation Header -->
-    <header class="bg-white border-b border-slate-200/80 sticky top-0 z-30 shadow-xs no-print" aria-hidden="true">
+    <header class="bg-white border-b border-slate-200/80 sticky top-0 z-30 shadow-xs no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Brand Logo & Title -->
@@ -222,7 +222,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 <button id="tabBtnTreat" onclick="switchTab('treatment')" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-2 transition-all hover:bg-slate-50 border bg-teal-50 text-teal-700 border-teal-200 shadow-xs">
                     <i class="fa-solid fa-hospital-user"></i>
                     <span>تمام وقت درمانی (شماره ۱)</span>
-                    <span id="badgeCountTreat" class="px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded-full text-[11px]">۲۵۰</span>
+                    <span id="badgeCountTreat" class="px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded-full text-[11px]">۲۶۸</span>
                 </button>
 
                 <button id="tabBtnReports" onclick="switchTab('reports')" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-2 transition-all hover:bg-slate-50 border text-slate-600 border-transparent">
@@ -249,7 +249,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </header>
 
     <!-- Main Content Body -->
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6" aria-hidden="true">
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
 
         <!-- KPI Statistic Cards Section -->
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 no-print">
@@ -257,7 +257,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex items-center justify-between">
                 <div>
                     <p class="text-xs text-slate-500 font-medium">مجموع پزشکان ثبت شده</p>
-                    <p id="kpiTotal" class="text-xl sm:text-2xl font-black text-slate-800 mt-1">۳۱۲</p>
+                    <p id="kpiTotal" class="text-xl sm:text-2xl font-black text-slate-800 mt-1">۳۳۰</p>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl">
                     <i class="fa-solid fa-users"></i>
@@ -268,7 +268,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex items-center justify-between">
                 <div>
                     <p class="text-xs text-slate-500 font-medium">شاغلین فعال</p>
-                    <p id="kpiActive" class="text-xl sm:text-2xl font-black text-emerald-600 mt-1">۲۸۷</p>
+                    <p id="kpiActive" class="text-xl sm:text-2xl font-black text-emerald-600 mt-1">۳۰۴</p>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
                     <i class="fa-solid fa-user-check"></i>
@@ -279,7 +279,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex items-center justify-between">
                 <div>
                     <p class="text-xs text-slate-500 font-medium">غیر شاغل (خارج شده / غایب)</p>
-                    <p id="kpiExited" class="text-xl sm:text-2xl font-black text-amber-600 mt-1">۲۵</p>
+                    <p id="kpiExited" class="text-xl sm:text-2xl font-black text-amber-600 mt-1">۲۶</p>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
                     <i class="fa-solid fa-user-xmark"></i>
@@ -359,7 +359,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 pt-2 border-t border-slate-100 text-xs">
                     <!-- Specialty Filter -->
                     <div>
-                        <select id="filterSpecialty" onchange="handleSearchFilter()" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-teal-500"><option value="">همه رشته‌های تخصصی</option><option value="ENT">ENT</option><option value="آسیب شناسی">آسیب شناسی</option><option value="ارتوپدی">ارتوپدی</option><option value="اورولوژی">اورولوژی</option><option value="بیماریهای مغز واعصاب">بیماریهای مغز واعصاب</option><option value="بیهوشی">بیهوشی</option><option value="جراح عمومی">جراح عمومی</option><option value="جراحی دهان،فک وصورت">جراحی دهان،فک وصورت</option><option value="جراحی عمومی">جراحی عمومی</option><option value="جراحي مغز و اعصاب">جراحي مغز و اعصاب</option><option value="جراحی کلیه و مجاری ادراری و تناسلی">جراحی کلیه و مجاری ادراری و تناسلی</option><option value="داخلی">داخلی</option><option value="رادیوانکولوژی">رادیوانکولوژی</option><option value="راديوتراپي">راديوتراپي</option><option value="رادیولوژی">رادیولوژی</option><option value="روانپزشکی">روانپزشکی</option><option value="زنان و زایمان">زنان و زایمان</option><option value="زنان وزایمان">زنان وزایمان</option><option value="طب اورژانس">طب اورژانس</option><option value="طب فیزیکی وتوانبخشی">طب فیزیکی وتوانبخشی</option><option value="عفونی">عفونی</option><option value="فلوشیپ اینترونشن قلب">فلوشیپ اینترونشن قلب</option><option value="فلوشیپ نازایی">فلوشیپ نازایی</option><option value="فوق تخصص جراحی قلب وعروق">فوق تخصص جراحی قلب وعروق</option><option value="فوق تخصص جراحی پلاستیک">فوق تخصص جراحی پلاستیک</option><option value="فوق تخصص ریه کودکان">فوق تخصص ریه کودکان</option><option value="فوق تخصص نفرولوژی کودکان">فوق تخصص نفرولوژی کودکان</option><option value="فوق تخصص نوزادان">فوق تخصص نوزادان</option><option value="فوق تخصص گوارش وکبد بالغین">فوق تخصص گوارش وکبد بالغین</option><option value="قلب و عروق">قلب و عروق</option><option value="مراقبت های ویژه کودکان">مراقبت های ویژه کودکان</option><option value="نورولوژی">نورولوژی</option><option value="پاتولوژی">پاتولوژی</option><option value="پزشکی هسته ای">پزشکی هسته ای</option><option value="پوست">پوست</option><option value="چشم">چشم</option><option value="چشم پزشکی">چشم پزشکی</option><option value="کودکان">کودکان</option><option value="گوش وحلق وبيني">گوش وحلق وبيني</option></select>
+                        <select id="filterSpecialty" onchange="handleSearchFilter()" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-teal-500"><option value="">همه رشته‌های تخصصی</option><option value="ENT">ENT</option><option value="آسیب شناسی">آسیب شناسی</option><option value="ارتوپدی">ارتوپدی</option><option value="اورولوژی">اورولوژی</option><option value="بیماریهای مغز واعصاب">بیماریهای مغز واعصاب</option><option value="بیهوشی">بیهوشی</option><option value="جراح عمومی">جراح عمومی</option><option value="جراحی دهان،فک وصورت">جراحی دهان،فک وصورت</option><option value="جراحی عمومی">جراحی عمومی</option><option value="جراحي مغز و اعصاب">جراحي مغز و اعصاب</option><option value="جراحی کلیه و مجاری ادراری و تناسلی">جراحی کلیه و مجاری ادراری و تناسلی</option><option value="داخلی">داخلی</option><option value="رادیوانکولوژی">رادیوانکولوژی</option><option value="راديوتراپي">راديوتراپي</option><option value="رادیولوژی">رادیولوژی</option><option value="روانپزشکی">روانپزشکی</option><option value="زنان و زایمان">زنان و زایمان</option><option value="زنان وزایمان">زنان وزایمان</option><option value="طب اورژانس">طب اورژانس</option><option value="طب فیزیکی وتوانبخشی">طب فیزیکی وتوانبخشی</option><option value="عفونی">عفونی</option><option value="فلوشیپ اینترونشن قلب">فلوشیپ اینترونشن قلب</option><option value="فلوشیپ نازایی">فلوشیپ نازایی</option><option value="فوق تخصص جراحی قلب وعروق">فوق تخصص جراحی قلب وعروق</option><option value="فوق تخصص جراحی پلاستیک">فوق تخصص جراحی پلاستیک</option><option value="فوق تخصص ریه کودکان">فوق تخصص ریه کودکان</option><option value="فوق تخصص نفرولوژی کودکان">فوق تخصص نفرولوژی کودکان</option><option value="فوق تخصص نوزادان">فوق تخصص نوزادان</option><option value="فوق تخصص گوارش وکبد بالغین">فوق تخصص گوارش وکبد بالغین</option><option value="قلب و عروق">قلب و عروق</option><option value="مراقبت های ویژه کودکان">مراقبت های ویژه کودکان</option><option value="نورولوژی">نورولوژی</option><option value="پاتولوژی">پاتولوژی</option><option value="پزشکی هسته ای">پزشکی هسته ای</option><option value="پوست">پوست</option><option value="چشم">چشم</option><option value="چشم پزشکی">چشم پزشکی</option><option value="كودكان">كودكان</option><option value="گوش وحلق وبيني">گوش وحلق وبيني</option></select>
                     </div>
 
                     <!-- City Filter (for Treatment) -->
@@ -393,9 +393,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                         <p id="tableSubtitle" class="text-xs text-slate-500 mt-0.5">معاونت درمان دانشگاه علوم پزشکی کردستان</p>
                     </div>
                     <div class="text-xs text-slate-500 flex items-center gap-3">
-                        <span>تعداد نمایش داده شده: <strong id="tableFilteredCount" class="text-teal-700 font-bold">۲</strong></span>
+                        <span>تعداد نمایش داده شده: <strong id="tableFilteredCount" class="text-teal-700 font-bold">۲۶۸</strong></span>
                         <span class="text-slate-300">|</span>
-                        <span>مجموع کل: <strong id="tableTotalCount" class="text-slate-800 font-bold">۲۵۰</strong></span>
+                        <span>مجموع کل: <strong id="tableTotalCount" class="text-slate-800 font-bold">۲۶۸</strong></span>
                     </div>
                 </div>
 
@@ -403,10 +403,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 <div class="print-only p-4 border-b border-slate-800 text-center space-y-1 mb-4">
                     <h2 class="text-base font-black text-black">جمهوری اسلامی ایران - وزارت بهداشت، درمان و آموزش پزشکی</h2>
                     <h3 class="text-sm font-bold text-black">دانشگاه علوم پزشکی و خدمات بهداشتی درمانی کردستان - معاونت درمان</h3>
-                    <h4 id="printTableHeading" class="text-sm font-extrabold text-black pt-1">لیست مشخصات پزشکان تمام وقت درمانی - شماره (۱)</h4>
+                    <h4 id="printTableHeading" class="text-sm font-extrabold text-black pt-1">لیست پزشکان تمام وقت</h4>
                     <div class="flex justify-between text-xs pt-2">
-                        <span id="printDateSpan">تاریخ گزارش: ۱۴۰۵/۰۹/۰۴</span>
-                        <span id="printCountSpan">تعداد کل رکوردها: ۲۵۰</span>
+                        <span id="printDateSpan">تاریخ گزارش: </span>
+                        <span id="printCountSpan">تعداد کل رکوردها: </span>
                         <span>سامانه جامع نظارت بر پزشکان تمام وقت</span>
                     </div>
                 </div>
@@ -534,7 +534,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                             </div>
                             <div class="text-right">
                                 <span class="text-xs text-slate-400 block">تعداد کل</span>
-                                <span id="repCount_treatment" class="text-lg font-black text-teal-700">۲۶۹</span>
+                                <span id="repCount_treatment" class="text-lg font-black text-teal-700">۲۶۸</span>
                             </div>
                         </div>
                         <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -639,7 +639,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                             </div>
                             <div class="text-right">
                                 <span class="text-xs text-slate-400 block">تعداد حذف‌شده</span>
-                                <span id="repCount_deleted" class="text-lg font-black text-rose-700">۱۹</span>
+                                <span id="repCount_deleted" class="text-lg font-black text-rose-700">۰</span>
                             </div>
                         </div>
                         <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -800,12 +800,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 text-center py-4 text-xs text-slate-400 no-print mt-auto" aria-hidden="true">
+    <footer class="bg-white border-t border-slate-200 text-center py-4 text-xs text-slate-400 no-print mt-auto">
         <p>سامانه جامع پزشکان تمام وقت | معاونت درمان دانشگاه علوم پزشکی و خدمات بهداشتی درمانی کردستان</p>
     </footer>
 
     <!-- ARCHIVED EXITED MODAL -->
-    <div id="archivedExitedModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4" aria-hidden="true">
+    <div id="archivedExitedModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-gradient-to-l from-slate-800 to-slate-700 px-5 py-4 flex items-center justify-between text-white">
                 <div class="flex items-center gap-2">
@@ -862,7 +862,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </div>
 
     <!-- DUPLICATES MODAL -->
-    <div id="duplicatesModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden" aria-hidden="true">
+    <div id="duplicatesModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-gradient-to-l from-rose-700 to-rose-600 px-5 py-4 flex items-center justify-between text-white">
                 <div class="flex items-center gap-2">
@@ -885,7 +885,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                         تعداد گروه‌های تکراری: <span id="dupGroupCount" class="font-black text-rose-700">۰</span>
                         | تعداد رکوردهای اضافی: <span id="dupExtraCount" class="font-black text-rose-700">۰</span>
                     </div>
-                    <button onclick="mergeAllDuplicates()" id="btnMergeAll" class="inline-flex items-center gap-1.5 px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition-colors" disabled="">
+                    <button onclick="mergeAllDuplicates()" id="btnMergeAll" class="inline-flex items-center gap-1.5 px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition-colors">
                         <i class="fa-solid fa-object-group"></i>
                         <span>ادغام همه گروه‌ها</span>
                     </button>
@@ -906,11 +906,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                                 <th class="p-2.5 text-center">عملیات</th>
                             </tr>
                         </thead>
-                        <tbody id="dupTableBody" class="divide-y divide-slate-100"></tbody>
+                        <tbody id="dupTableBody" class="divide-y divide-slate-100">
+                            <!-- Injected by JavaScript -->
+                        </tbody>
                     </table>
                 </div>
 
-                <div id="dupEmptyState" class="text-center py-8 text-slate-400 text-sm">
+                <div id="dupEmptyState" class="hidden text-center py-8 text-slate-400 text-sm">
                     <i class="fa-solid fa-circle-check text-3xl text-emerald-500 mb-2"></i>
                     <p>هیچ رکورد تکراری شناسایی نشد.</p>
                 </div>
@@ -925,7 +927,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     <!-- ==================== MODALS ==================== -->
 
     <!-- LOGIN MODAL -->
-    <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4" aria-hidden="true">
+    <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 text-center relative">
             <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-teal-600 to-emerald-500 flex items-center justify-center text-white text-2xl mx-auto shadow-lg shadow-teal-500/30 mb-4">
                 <i class="fa-solid fa-hospital-user"></i>
@@ -967,18 +969,21 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </div>
 
     <!-- DOCTOR ADD / EDIT MODAL -->
-    <div id="doctorModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 overflow-y-auto hidden" data-bound-backdrop="1" aria-hidden="true">
+    <div id="doctorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 overflow-y-auto" data-bound-backdrop="1">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-100 my-8">
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-                <h3 id="doctorModalTitle" class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-user-doctor text-teal-600"></i><span>ویرایش مشخصات پزشک</span></h3>
+                <h3 id="doctorModalTitle" class="text-base font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-user-doctor text-teal-600"></i>
+                    <span>ثبت پزشک جدید</span>
+                </h3>
                 <button onclick="closeDoctorModal()" class="text-slate-400 hover:text-slate-600 text-lg">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <form id="doctorForm" onsubmit="saveDoctorForm(event)" class="mt-4 space-y-4 text-xs">
-                <input type="hidden" id="docId" value="1795270436840">
-                <input type="hidden" id="docType" value="geographic">
+                <input type="hidden" id="docId">
+                <input type="hidden" id="docType">
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- First Name -->
@@ -997,7 +1002,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">رشته تخصصی <span class="text-rose-500">*</span></label>
                         <input list="specialtiesList" id="docSpecialty" required="" placeholder="انتخاب یا تایپ تخصص..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500">
-                        <datalist id="specialtiesList"><option value="ENT"></option><option value="آسیب شناسی"></option><option value="ارتوپدی"></option><option value="اورولوژی"></option><option value="بیماریهای مغز واعصاب"></option><option value="بیهوشی"></option><option value="جراح عمومی"></option><option value="جراحی دهان،فک وصورت"></option><option value="جراحی عمومی"></option><option value="جراحي مغز و اعصاب"></option><option value="جراحی کلیه و مجاری ادراری و تناسلی"></option><option value="داخلی"></option><option value="رادیوانکولوژی"></option><option value="راديوتراپي"></option><option value="رادیولوژی"></option><option value="روانپزشکی"></option><option value="زنان و زایمان"></option><option value="زنان وزایمان"></option><option value="طب اورژانس"></option><option value="طب فیزیکی وتوانبخشی"></option><option value="عفونی"></option><option value="فلوشیپ اینترونشن قلب"></option><option value="فلوشیپ نازایی"></option><option value="فوق تخصص جراحی قلب وعروق"></option><option value="فوق تخصص جراحی پلاستیک"></option><option value="فوق تخصص ریه کودکان"></option><option value="فوق تخصص نفرولوژی کودکان"></option><option value="فوق تخصص نوزادان"></option><option value="فوق تخصص گوارش وکبد بالغین"></option><option value="قلب و عروق"></option><option value="مراقبت های ویژه کودکان"></option><option value="نورولوژی"></option><option value="پاتولوژی"></option><option value="پزشکی هسته ای"></option><option value="پوست"></option><option value="چشم"></option><option value="چشم پزشکی"></option><option value="کودکان"></option><option value="گوش وحلق وبيني"></option></datalist>
+                        <datalist id="specialtiesList"><option value="ENT"></option><option value="آسیب شناسی"></option><option value="ارتوپدی"></option><option value="اورولوژی"></option><option value="بیماریهای مغز واعصاب"></option><option value="بیهوشی"></option><option value="جراح عمومی"></option><option value="جراحی دهان،فک وصورت"></option><option value="جراحی عمومی"></option><option value="جراحي مغز و اعصاب"></option><option value="جراحی کلیه و مجاری ادراری و تناسلی"></option><option value="داخلی"></option><option value="رادیوانکولوژی"></option><option value="راديوتراپي"></option><option value="رادیولوژی"></option><option value="روانپزشکی"></option><option value="زنان و زایمان"></option><option value="زنان وزایمان"></option><option value="طب اورژانس"></option><option value="طب فیزیکی وتوانبخشی"></option><option value="عفونی"></option><option value="فلوشیپ اینترونشن قلب"></option><option value="فلوشیپ نازایی"></option><option value="فوق تخصص جراحی قلب وعروق"></option><option value="فوق تخصص جراحی پلاستیک"></option><option value="فوق تخصص ریه کودکان"></option><option value="فوق تخصص نفرولوژی کودکان"></option><option value="فوق تخصص نوزادان"></option><option value="فوق تخصص گوارش وکبد بالغین"></option><option value="قلب و عروق"></option><option value="مراقبت های ویژه کودکان"></option><option value="نورولوژی"></option><option value="پاتولوژی"></option><option value="پزشکی هسته ای"></option><option value="پوست"></option><option value="چشم"></option><option value="چشم پزشکی"></option><option value="كودكان"></option><option value="گوش وحلق وبيني"></option></datalist>
                     </div>
 
                     <!-- National ID -->
@@ -1013,7 +1018,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     </div>
 
                     <!-- City (for Treatment Doctors) -->
-                    <div id="fieldCityContainer" class="space-y-3" style="display: none;">
+                    <div id="fieldCityContainer" class="space-y-3">
                         <div>
                             <label class="block font-bold text-slate-700 mb-1">شهرستان اول (مرکز خدمت اصلی)</label>
                             <select id="docCity" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500">
@@ -1052,7 +1057,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     </div>
 
                     <!-- Academic Rank (for Geographic Faculty) -->
-                    <div id="fieldRankContainer" style="">
+                    <div id="fieldRankContainer">
                         <label class="block font-bold text-slate-700 mb-1">مرتبه علمی</label>
                         <select id="docRank" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500">
                             <option value="استادیار">استادیار</option>
@@ -1063,7 +1068,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     </div>
 
                     <!-- Service Type (for Geo) -->
-                    <div id="fieldServiceTypeContainer" style="">
+                    <div id="fieldServiceTypeContainer">
                         <label class="block font-bold text-slate-700 mb-1">نوع خدمت</label>
                         <input type="text" id="docServiceType" value="هیأت علمي ت ج" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500">
                     </div>
@@ -1102,7 +1107,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </div>
 
     <!-- EXCEL IMPORT MODAL -->
-    <div id="importModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden" data-bound-backdrop="1" aria-hidden="true">
+    <div id="importModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden" data-bound-backdrop="1">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
             <div class="flex items-center justify-between pb-3 border-b border-slate-100">
                 <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
@@ -1151,9 +1156,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 <div id="importFileInfo" class="p-3 bg-emerald-50 rounded-lg border border-emerald-200 text-emerald-800 flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-file-excel text-emerald-600"></i>
-                        <span id="importFileName" class="font-bold">162971_لیست مشخصات پزشکان تمام وقت درمانی شاغل در مراکز درمانی دانشگاه (2).xlsx</span>
+                        <span id="importFileName" class="font-bold">گزارش_پزشکان_تمام_وقت_درمانی_به_ترتیب_شهرستان_۱۴۰۵۰۹۰۴.xlsx</span>
                     </div>
-                    <span id="importFileRowCount" class="text-[11px] font-bold">۶۲ رکورد آماده بارگذاری</span>
+                    <span id="importFileRowCount" class="text-[11px] font-bold">۲۶۸ رکورد آماده بارگذاری</span>
                 </div>
 
                 <!-- نگاشت ستون‌های نام (قابل تغییر توسط کاربر) -->
@@ -1165,14 +1170,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div>
                             <label class="block font-bold text-slate-600 mb-1">ستون «نام»</label>
-                            <select id="mapFirstName" onchange="updateImportPreview()" class="w-full p-2 bg-white border border-slate-200 rounded-lg font-bold text-slate-700"><option value="0">ردیف (ستون A)</option><option value="1" selected="">نام پزشک (ستون B)</option><option value="2">نام خانوادگی (ستون C)</option><option value="3">تخصص (ستون D)</option><option value="4">شهرستان (ستون E)</option><option value="5">کد ملی (ستون F)</option><option value="6">نظام پزشکی (ستون G)</option><option value="7">تاریخ شروع تمام وقتی (ستون H)</option><option value="8">تاریخ خروج (ستون I)</option><option value="9">توضیحات (ستون J)</option></select>
+                            <select id="mapFirstName" onchange="updateImportPreview()" class="w-full p-2 bg-white border border-slate-200 rounded-lg font-bold text-slate-700"><option value="0">ردیف (ستون A)</option><option value="1" selected="">نام (ستون B)</option><option value="2">نام خانوادگی (ستون C)</option><option value="3">تخصص (ستون D)</option><option value="4">شهرستان (ستون E)</option><option value="5">شهرستان دوم (ستون F)</option><option value="6">کد ملی (ستون G)</option><option value="7">نظام پزشکی (ستون H)</option><option value="8">شروع تمام وقتی (ستون I)</option><option value="9">ورود مجدد (ستون J)</option><option value="10">تاریخ خروج (ستون K)</option><option value="11">وضعیت (ستون L)</option><option value="12">توضیحات (ستون M)</option></select>
                         </div>
                         <div>
                             <label class="block font-bold text-slate-600 mb-1">ستون «نام خانوادگی»</label>
-                            <select id="mapLastName" onchange="updateImportPreview()" class="w-full p-2 bg-white border border-slate-200 rounded-lg font-bold text-slate-700"><option value="-1">— ندارد / تفکیک خودکار از نام کامل —</option><option value="0">ردیف (ستون A)</option><option value="1">نام پزشک (ستون B)</option><option value="2" selected="">نام خانوادگی (ستون C)</option><option value="3">تخصص (ستون D)</option><option value="4">شهرستان (ستون E)</option><option value="5">کد ملی (ستون F)</option><option value="6">نظام پزشکی (ستون G)</option><option value="7">تاریخ شروع تمام وقتی (ستون H)</option><option value="8">تاریخ خروج (ستون I)</option><option value="9">توضیحات (ستون J)</option></select>
+                            <select id="mapLastName" onchange="updateImportPreview()" class="w-full p-2 bg-white border border-slate-200 rounded-lg font-bold text-slate-700"><option value="-1">— ندارد / تفکیک خودکار از نام کامل —</option><option value="0">ردیف (ستون A)</option><option value="1">نام (ستون B)</option><option value="2" selected="">نام خانوادگی (ستون C)</option><option value="3">تخصص (ستون D)</option><option value="4">شهرستان (ستون E)</option><option value="5">شهرستان دوم (ستون F)</option><option value="6">کد ملی (ستون G)</option><option value="7">نظام پزشکی (ستون H)</option><option value="8">شروع تمام وقتی (ستون I)</option><option value="9">ورود مجدد (ستون J)</option><option value="10">تاریخ خروج (ستون K)</option><option value="11">وضعیت (ستون L)</option><option value="12">توضیحات (ستون M)</option></select>
                         </div>
                     </div>
-                    <div id="importPreview" class="text-slate-600"><p class="font-bold text-slate-700 mb-1">پیش‌نمایش ۳ رکورد اول (بر اساس نگاشت بالا):</p><table class="w-full text-right text-[11px] border border-slate-200 rounded-lg overflow-hidden"><thead class="bg-slate-100 text-slate-700"><tr><th class="p-1.5">نام</th><th class="p-1.5">نام خانوادگی</th><th class="p-1.5">تخصص</th><th class="p-1.5">شهرستان</th></tr></thead><tbody class="divide-y divide-slate-100"><tr><td class="p-1.5 font-bold text-slate-800">یوسف</td><td class="p-1.5 font-bold text-slate-800">عابدی فرد</td><td class="p-1.5 text-slate-600">مراقبت های ویژه کودکان</td><td class="p-1.5 text-slate-600">سنندج</td></tr><tr><td class="p-1.5 font-bold text-slate-800">سامان</td><td class="p-1.5 font-bold text-slate-800">امینی</td><td class="p-1.5 text-slate-600">ENT</td><td class="p-1.5 text-slate-600">مریوان</td></tr><tr><td class="p-1.5 font-bold text-slate-800">شیرکو</td><td class="p-1.5 font-bold text-slate-800">سلیمانی</td><td class="p-1.5 text-slate-600">رادیولوژی</td><td class="p-1.5 text-slate-600">بیجار</td></tr></tbody></table></div>
+                    <div id="importPreview" class="text-slate-600"><p class="font-bold text-slate-700 mb-1">پیش‌نمایش ۳ رکورد اول (بر اساس نگاشت بالا):</p><table class="w-full text-right text-[11px] border border-slate-200 rounded-lg overflow-hidden"><thead class="bg-slate-100 text-slate-700"><tr><th class="p-1.5">نام</th><th class="p-1.5">نام خانوادگی</th><th class="p-1.5">تخصص</th><th class="p-1.5">شهرستان</th></tr></thead><tbody class="divide-y divide-slate-100"><tr><td class="p-1.5 font-bold text-slate-800">امید</td><td class="p-1.5 font-bold text-slate-800">قادری</td><td class="p-1.5 text-slate-600">فوق تخصص نفرولوژی کودکان</td><td class="p-1.5 text-slate-600">بانه</td></tr><tr><td class="p-1.5 font-bold text-slate-800">امیر</td><td class="p-1.5 font-bold text-slate-800">محقق منتظری</td><td class="p-1.5 text-slate-600">کودکان</td><td class="p-1.5 text-slate-600">بانه</td></tr><tr><td class="p-1.5 font-bold text-slate-800">پویا</td><td class="p-1.5 font-bold text-slate-800">حسنی شایان</td><td class="p-1.5 text-slate-600">کودکان</td><td class="p-1.5 text-slate-600">بانه</td></tr></tbody></table></div>
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
@@ -1184,7 +1189,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </div>
 
     <!-- USER MODAL (Admin Add / Edit User) -->
-    <div id="userModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4" data-bound-backdrop="1" aria-hidden="true">
+    <div id="userModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4" data-bound-backdrop="1">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
             <div class="flex items-center justify-between pb-3 border-b border-slate-100">
                 <h3 id="userModalTitle" class="text-base font-bold text-slate-800">تعریف کاربر جدید شهرستان</h3>
@@ -1246,7 +1251,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </div>
 
     <!-- CHANGE PASSWORD MODAL (For Any Logged-in User) -->
-    <div id="changePasswordModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4" data-bound-backdrop="1" aria-hidden="true">
+    <div id="changePasswordModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4" data-bound-backdrop="1">
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-right">
             <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
                 <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
@@ -1284,7 +1289,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     <!-- Script loading -->
     <!-- بارگذاری اسکریپت با نسخه (جلوگیری از اجرای نسخه قدیمی کش‌شده) -->
-    <script aria-hidden="true">
+    <script>
 /**
  * سامانه پزشکان تمام وقت دانشگاه علوم پزشکی کردستان - معاونت درمان
  * ------------------------------------------------------------------
@@ -4605,7 +4610,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 </script>
-    <script aria-hidden="true">
+    <script>
         /* هشدار در صورتی که این فایل به‌صورت مستقیم (بدون پوشه public) باز شود:
            این فایل «قالب» است و منابع آن در پوشه public قرار دارد. */
         window.addEventListener('load', function () {
@@ -4648,7 +4653,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 900);
         });
     </script>
-    <script aria-hidden="true">
+    <script>
         /* نمایش خطاهای اجرایی به کاربر برای عیب‌یابی سریع */
         window.addEventListener('error', function (ev) {
             if (!ev || !ev.message) return;
@@ -4663,4 +4668,4 @@ document.addEventListener('DOMContentLoaded', function () {
     </script>
 
 
-<div class="swal2-container swal2-rtl swal2-center swal2-backdrop-show" data-swal2-theme="light" style="overflow-y: auto;"><div aria-labelledby="swal2-title" aria-describedby="swal2-html-container" class="swal2-popup swal2-modal swal2-icon-info swal2-show" tabindex="-1" role="dialog" aria-live="assertive" aria-modal="true" style="display: grid;"><button type="button" class="swal2-close" aria-label="Close this dialog" style="display: none;">×</button><ul class="swal2-progress-steps" style="display: none;"></ul><div class="swal2-icon swal2-info swal2-icon-show" style="display: flex;"><div class="swal2-icon-content">i</div></div><img class="swal2-image" style="display: none;"><h2 class="swal2-title" id="swal2-title" style="display: block;">آماده‌سازی نسخه</h2><div class="swal2-html-container" id="swal2-html-container" style="display: block;">در حال ساخت فایل مستقل index.html...</div><input id="swal2-input" class="swal2-input" style="display: none;"><input type="file" class="swal2-file" style="display: none;"><div class="swal2-range" style="display: none;"><input type="range"><output></output></div><select id="swal2-select" class="swal2-select" style="display: none;"></select><div class="swal2-radio" style="display: none;"></div><label class="swal2-checkbox" style="display: none;"><input type="checkbox" id="swal2-checkbox"><span class="swal2-label"></span></label><textarea id="swal2-textarea" class="swal2-textarea" style="display: none;"></textarea><div class="swal2-validation-message" id="swal2-validation-message" style="display: none;"></div><div class="swal2-actions" style="display: none;"><div class="swal2-loader"></div><button type="button" class="swal2-confirm swal2-styled" aria-label="" style="display: none; --swal2-action-button-focus-box-shadow: 0 0 0 3px rgba(112, 102, 224, 0.5);">OK</button><button type="button" class="swal2-deny swal2-styled" aria-label="" style="display: none; --swal2-action-button-focus-box-shadow: 0 0 0 3px rgba(220, 55, 65, 0.5);">No</button><button type="button" class="swal2-cancel swal2-styled" aria-label="" style="display: none; --swal2-action-button-focus-box-shadow: 0 0 0 3px rgba(110, 120, 129, 0.5);">Cancel</button></div><div class="swal2-footer" style="display: none;"></div><div class="swal2-timer-progress-bar-container"><div class="swal2-timer-progress-bar" style="display: none;"></div></div></div></div></body></html>
+</body></html>
